@@ -59,7 +59,45 @@
             .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-check"></i> 入力されたパスワードに誤りがあります。</p></div>');
           return false;
         });
-    })
+    });
+    
+    $('#blogPostFormBtn').click(function(){
+      var href = 'https://www.studyabroad.co.jp/counsel/counsel.php';
+      var desk = $('#BlogSeminarDesk').val();
+      alert(desk);
+//      var form = $('#blogPostForm');
+//      var query = form.serialize();
+//      var param = form.serializeArray();
+      
+//      $.each(param, function( i, v) {
+//      alert(i);
+//      alert(v);
+//        var field = i;
+//        var value = v;
+//    	});
+      
+      
+      // ajax
+      $.ajax(
+        {
+          type: 'POST',
+          url: href,
+          data: {
+          'desk': desk
+        },
+        dataType: 'json',
+        success: function(res){
+          alert(res);
+        },
+        error: function(err){
+          alert(err);
+        } 
+      }
+      );
+
+
+      return false;
+    });
   });
 
 // ログイン済みかの認証を行う
