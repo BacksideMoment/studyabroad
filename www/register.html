@@ -10,76 +10,20 @@
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
   <script src="lib/LTE/dist/js/app.min.js"></script>
   <script src="js/fastclick.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/authenticate.js"></script>
 
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="lib/LTE/bootstrap/css/bootstrap.min.css">
+  <!-- AdminLTE -->
+  <link rel="stylesheet" href="lib/LTE/dist/css/AdminLTE.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <link rel="stylesheet" href="components/loader.css">
-  <link rel="stylesheet" href="lib/LTE/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="lib/LTE/dist/css/AdminLTE.min.css">
-  <link rel="stylesheet" href="css/style.css">
   
-  <script type="text/javascript">
-    document.addEventListener("deviceready", function(){
-      FastClick.attach(document.body);
-    }, false);
-    $(function() {
-      $('#register').click(function(){
-        var email = $("#email").val();
-        if ( email === '' ) {
-          $("#flashMessage")
-            .empty()
-            .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-close"></i> メールアドレスは必ず入力してください。</p></div>');
-          $("#email")
-            .focus();
-          return false;
-        }
-        var password = $("#password").val();
-        if ( password === '' ) {
-          $("#flashMessage")
-            .empty()
-            .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-close"></i> パスワードは必ず入力してください。</p></div>');
-          $("#password").focus();
-          return false;
-        }
-        // 登録済みかチェック
-        monaca.cloud.User.login(email, password)
-          .done(function(){ // 成功なら
-            $("#flashMessage")
-              .empty()
-              .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-close"></i> お客様はすでに登録済です<br>3秒後にログインページにリダイレクトします。</p></div>');
-              setTimeout('redirect("index")', 3000);
-            return false;
-          })
-          .fail(function(errors){ // 失敗なら
-            monaca.cloud.User.register(email, password)
-              .done(function(){ // 登録成功
-                monaca.cloud.User.autoLogin()
-                  .done(function(){ // ログイン成功
-                    redirect('top');
-                  })
-                  .fail(function(error){ // ログイン失敗
-                  });
-              })
-              .fail(function(errors){ // 登録失敗
-                $("#flashMessage")
-                  .empty()
-                  .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-close"></i> ログインできません<br>お問い合わせください。</p></div>');
-                $('#register')
-                  .children()
-                  .children()
-                  .text('Log in');
-                return false;
-              });
-          });
-      })
-    });
-    function redirect(destination){
-      var destination = destination;
-      location.href = destination + '.html';
-    }
-</script>
 </head>
 <body>
   <div class="row">
@@ -93,34 +37,42 @@
         </div>
       </div>
       <div class="box-body">
+        <!-- flashMessage --> 
         <div id="flashMessage"></div>
-        <div class="form-group">
-          <label class="col-md-3 control-label">Email</label>
-          <div class="col-md-4">
-            <input id="email" type="email" class="form-control" value=""/>
+        
+        <!-- form -->
+        <form action="#" role="form" class="form-horizontal" id="registerForm" method="post" accept-charset="utf-8">
+          <!-- email -->
+          <div class="form-group">
+            <label class="col-md-3 control-label">Emai</label>
+            <div class="col-md-4">
+              <input id="email" type="email" class="form-control" value=""/>
+            </div>
           </div>
+          
+          <!-- password -->
+          <div class="form-group">
+            <label class="col-md-3 control-label">Password</label>
+            <div class="col-md-4">
+              <input id="password" type="password" pattern="" class="form-control" value=""/>
+            </div>
+          </div>
+          
+          <!-- error -->
+          <div id="error"></div>
         </div>
         
-        <div class="form-group">
-          <label class="col-md-3 control-label">Password</label>
-          <div class="col-md-4">
-            <input id="password" type="password" pattern="" class="form-control" value=""/>
+        <!-- submit -->
+        <div class="box-footer">
+          <div class="form-group">
+            <button id="registerFormBtn" type="button" class="btn btn-block bg-red col-md-offset-4">
+              <i class="fa fa-check"></i>
+              <strong>Sign in</strong>
+            </button>
+            </div>
           </div>
         </div>
-        
-      </div>
-    </div>
-    <div class="col-md-12">
-      <div class="box-footer">
-        <div class="form-group">
-          <!--<button id="register" type="button" class="btn btn-block bg-red" data-toggle="modal" data-target="#myModal">-->
-          <button id="register" type="button" class="btn btn-block bg-red">
-            <i class="fa fa-check"></i> 
-            <strong>Sign in</strong>
-          </button>
-          </div>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
 

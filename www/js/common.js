@@ -1,8 +1,17 @@
-  document.addEventListener("deviceready", function(){
-    FastClick.attach(document.body);
-  }, false);
-  
-  
+// FastClick
+document.addEventListener("deviceready", function(){
+  FastClick.attach(document.body);
+}, false);
+
+// define
+var URL_POST_REGISTER = 'https://studyabroad.co.jp:studyabroad7205@www-s.studyabroad.co.jp/admin/hybridApp/register/';
+var URL_POST_LOGIN = 'https://studyabroad.co.jp:studyabroad7205@www-s.studyabroad.co.jp/admin/hybridApp/login/';
+
+// 引数のhtmlにリダイレクトさせる
+function redirect(destination, params){
+  var destination = destination;
+  location.href = destination + '.html';
+}  
   // jQuery
   $(function() {
 //    $('.main-header').append(header);
@@ -152,10 +161,5 @@
           })
         });
       });
-  }
-  // 引数のhtmlにリダイレクトさせる
-  function redirect(destination){
-    var destination = destination;
-    location.href = destination + '.html';
   }
 
