@@ -13,6 +13,7 @@
   <script src="js/fastclick.js"></script>
   <script src="js/common.js"></script>
   <script src="js/authenticate.js"></script>
+  <script src="js/display.js"></script>
   
   <!-- css -->
   <!-- Font Awesome -->
@@ -28,77 +29,7 @@
 </head>
 <body>
   <div class="row">
-    <div class="col-md-12">
-      <div class="box no-border">
-        <div class="box-header text-center bg-navy">
-          <h1>
-            <i class="fa fa-user"></i><strong> Log in</strong>
-          </h1>
-        </div>
-      </div>
-      <div class="box-body">
-        <!-- flashMessage --> 
-        <div id="flashMessage"></div>
-        
-        <!-- form -->
-        <form action="#" role="form" class="form-horizontal" id="loginForm" method="post" accept-charset="utf-8">
-          <!-- email -->
-          <div class="form-group">
-            <label class="col-md-3 control-label">Emai</label>
-            <div class="col-md-4">
-              <input id="email" type="email" class="form-control" value=""/>
-            </div>
-          </div>
-          
-          <!-- password -->
-          <div class="form-group">
-            <label class="col-md-3 control-label">Password</label>
-            <div class="col-md-4">
-              <input id="password" type="password" pattern="" class="form-control" value=""/>
-            </div>
-          </div>
-          
-          <!-- error -->
-          <div id="error"></div>
-        </div>
-        
-        <!-- submit -->
-        <div class="box-footer">
-          <div class="form-group">
-            <button id="loginFormBtn" type="button" class="btn btn-block bg-navy col-md-offset-4">
-              <i class="fa fa-check"></i>
-              <strong>Log in</strong>
-            </button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <div class="col-md-12">
-      <div class="box-footer">
-        <div class="form-group">
-          <a href="register.html" class="btn btn-block bg-red">
-            <i class="fa fa-plus"></i> 
-            <strong>Sign in</strong>
-             <i class="fa fa-user"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-md-12">
-      <div class="box-footer">
-        <div class="form-group">
-          <a href="tetris.html" class="btn btn-block bg-aqua">
-            <i class="fa fa-smile-o"></i> 
-            <strong>Tetris</strong>
-          </a>
-        </div>
-      </div>
-    </div>
-  
-</div>
-
+    <div class="col-md-12" id="display"></div>
+  </div>
 </body>
 </html>
