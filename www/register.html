@@ -4,12 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+
   <script src="components/loader.js"></script>
+  
   <script src="lib/LTE/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-  <script src="lib/LTE/bootstrap/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script src="lib/LTE/bootstrap/js/bootstrap.min.js"></script>
   <script src="lib/LTE/dist/js/app.min.js"></script>
   <script src="js/fastclick.js"></script>
+  
+  <script src="js/common.js"></script>
+  <script src="js/authenticate.js"></script>
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -20,6 +25,7 @@
   <link rel="stylesheet" href="lib/LTE/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="css/style.css">
   
+<!--  
   <script type="text/javascript">
     document.addEventListener("deviceready", function(){
       FastClick.attach(document.body);
@@ -79,7 +85,7 @@
       var destination = destination;
       location.href = destination + '.html';
     }
-</script>
+</script>-->
 </head>
 <body>
   <div class="row">
@@ -94,27 +100,30 @@
       </div>
       <div class="box-body">
         <div id="flashMessage"></div>
+<!--        
+        <div class="well">
+          <p>受信可能なメールアドレスを入力しボタンを押して下さい</p>
+        </div>
+        -->
         <div class="form-group">
           <label class="col-md-3 control-label">Email</label>
           <div class="col-md-4">
             <input id="email" type="email" class="form-control" value=""/>
           </div>
         </div>
-        
         <div class="form-group">
           <label class="col-md-3 control-label">Password</label>
           <div class="col-md-4">
             <input id="password" type="password" pattern="" class="form-control" value=""/>
           </div>
         </div>
-        
       </div>
     </div>
     <div class="col-md-12">
       <div class="box-footer">
         <div class="form-group">
           <!--<button id="register" type="button" class="btn btn-block bg-red" data-toggle="modal" data-target="#myModal">-->
-          <button id="register" type="button" class="btn btn-block bg-red">
+          <button id="registBtn" type="button" class="btn btn-block bg-red">
             <i class="fa fa-check"></i> 
             <strong>Sign in</strong>
           </button>

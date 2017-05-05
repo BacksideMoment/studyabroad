@@ -1,7 +1,79 @@
-  document.addEventListener("deviceready", function(){
-    FastClick.attach(document.body);
-  }, false);
+// 読み込んだら発火
+document.addEventListener("deviceready", function(){
+}, false);
+
+$(function(){
+  FastClick.attach(document.body);
   
+  $('#logoutBtn').click(function(){
+    logout();
+  });
+});
+
+// ncmbモジュールの読み込み
+// mobile backendアプリとの連携
+// SDKの初期化
+var ncmb = new NCMB(
+  "b1682262339cb0e6a7e6ee3d0884d627ba048eb6d952a108ef852abe5c926fde", // アプリケーションキー
+  "200bea16e05ad9d81c45db7518d35cf4336310091c2f2ece9b6075ee42b718f9" // クライアントキー
+);
+//Userのインスタンスを作成
+var user = new ncmb.User();
+
+// 引数のhtmlにリダイレクトさせる
+var redirect = function(destination){
+  var destination = destination;
+  location.href = destination + '.html';
+}
+
+
+var userAdd = function(email, password){
+  // set
+  user.set("userName", email)
+      .set("password", password);
+  
+  // 新規登録
+  user.signUpByAccount()
+      .then(function(){
+        // 登録後処理
+        login(email, password)
+        redirect('top');
+      })
+      .catch(function(err){
+        // エラー処理
+        return false;
+      });
+}
+ 
+var login = function(email, password){
+  console.log(email)
+  // ユーザー名とパスワードでログイン
+  ncmb.User.login(email, password)
+      .then(function(data){
+        // ログイン後処理
+        redirect('top');
+      })
+      .catch(function(err){
+        // エラー処理
+      });
+}
+
+var logout = function(){
+  // ログアウト
+  ncmb.User.logout();
+  redirect('index');
+}
+  
+var registConfirm = function(email){
+  ncmb.User.requestSignUpEmail("test@example.com")
+       .then(function(data){
+          // 送信後処理
+       })
+       .catch(function(err){
+         // エラー処理
+       });
+}
+ 
   
   // jQuery
   $(function() {
@@ -152,10 +224,5 @@
           })
         });
       });
-  }
-  // 引数のhtmlにリダイレクトさせる
-  function redirect(destination){
-    var destination = destination;
-    location.href = destination + '.html';
   }
 

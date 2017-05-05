@@ -4,12 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  
   <script src="components/loader.js"></script>
+  
   <script src="lib/LTE/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-  <script src="lib/LTE/bootstrap/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script src="lib/LTE/bootstrap/js/bootstrap.min.js"></script>
   <script src="lib/LTE/dist/js/app.min.js"></script>
   <script src="js/fastclick.js"></script>
+  
   <script src="js/common.js"></script>
 
   <!-- Font Awesome -->
@@ -24,11 +27,11 @@
   <link rel="stylesheet" href="css/style.css">
 
 </head>
-<body class="skin-blue">
+<body class="skin-blue sidebar-mini">
   <div class="wrapper">
     <!-- header -->
     <header class="main-header">
-      <nav class="navbar navbar-static-top">
+      <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
           <span class="icon-bar"></span>
         </a>
@@ -122,12 +125,12 @@
               </li>
             </ul>
           </li>
+<!--          
           <li class="treeview">
-
             <a type="button" href="#" data-toggle="modal" data-target="#myModal">
               <i class="fa fa-sign-out"></i> <span> ログアウト</span>
             </a>
-          </li>
+          </li>-->
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -144,7 +147,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal"><strong>Close</strong></button>
-            <button id="logout" type="button" class="btn btn-lg bg-red col-md-4"><i class="fa fa-check"></i> <strong>ログアウトする</strong></button>
+            <button id="logoutBtn" type="button" class="btn btn-lg bg-red col-md-4"><i class="fa fa-check"></i> <strong>ログアウトする</strong></button>
           </div>
         </div>
       </div>
