@@ -3,6 +3,7 @@
 $(function(){
   setLocalStrage();
   var display = new checkURL();
+  
 });
 
 
