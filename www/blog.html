@@ -156,31 +156,38 @@
         <div class="col-md-12">
           <div id="flashMessage"></div>
           <div class="box no-border">
+            <div class="box-header text-center bg-blue">
+              <h2>
+                <i class="fa fa-edit"></i> ブログ投稿
+              </h2>
+            </div>
+          </div>
+          <div class="box-body">
             <div class="box-content">
-              <div class="box-body">
-              <form action="#" role="form" novalidate="novalidate" class="form-horizontal" id="blogPostForm" method="post" accept-charset="utf-8">
+              <div class="form-group">
+                <!-- title -->
                 <div class="form-group">
-                  <label class="col-md-2 control-label">デスク</label>
-                    <div class="col-md-4">
-                      <div class="control-group">
-                        <div class="controls">
-                          <select name="desk" class="form-control" id="BlogSeminarDesk">
-                            <option value=""></option>
-                            <option value="T" selected="selected">東京</option>
-                            <option value="O">大阪</option>
-                            <option value="N">名古屋</option>
-                            <option value="99">その他</option>
-                          </select>
-                      </div>
-                    </div>
+                  <label class="col-md-3 control-label">タイトル</label>
+                  <div class="col-md-4">
+                    <input id="title" type="text" class="form-control" value=""/>
                   </div>
                 </div>
-                
-                <!-- submit -->
-                <div class="box-footer">
-                  <button type="submit" id="blogPostFormBtn" class="btn btn-block bg-navy col-md-6 col-md-offset-2"> POST</button>
+              </div>
+              
+              <div class="form-group">
+                <!-- content -->
+                <div class="form-group">
+                  <label class="col-md-3 control-label">内容</label>
+                  <div class="col-md-4">
+                    <textarea class="form-control" rows="6" /></textarea>
+                  </div>
                 </div>
-              </form>
+              </div>
+              
+              
+              <!-- submit -->
+              <div class="box-footer">
+                <button type="submit" id="blogPostFormBtn" class="btn btn-block bg-navy col-md-6 col-md-offset-2"><i class="fa fa-edit"></i> 投稿する</button>
               </div>
             </div>
           </div>

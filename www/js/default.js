@@ -1,4 +1,29 @@
 // ini set
+
+var nav = ( function(){/*
+<nav class="navbar navbar-static-top">
+  <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+    <span class="icon-bar"></span>
+  </a>
+  <div class="navbar-custom-menu">
+    <ul class="nav navbar-nav">
+      <li class="dropdown notifications-menu">
+        <a href="notify.html" class="dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-bell-o"></i>
+          <span class="label bg-red">10</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li class="header">You have 10 notifications</li>
+        </ul>
+      </li>
+      <li>
+        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+*/}).toString().replace(/(\n)/g, '').split('*')[1];
+
 var header = (function() {/*
 <nav class="navbar navbar-static-top">
   <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">

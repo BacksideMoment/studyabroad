@@ -1,3 +1,36 @@
+updateEmail = function(newEmail){
+  return monaca.cloud.User.saveProperties({"email": newEmail});
+}  
+
+$(function(){
+  FastClick.attach(document.body);
+  $('#updateEmail').click(function(){
+    var newEmail = $('#newEmail').val();
+    alert(newEmail);
+    if ( newEmail === '' ) {
+      $("#flashMessage")
+        .empty()
+        .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-ban"></i> メールアドレスは必ず入力してください。</p></div>');
+      $("#newEmail").focus();
+      return false;
+    }
+    alert(updateEmail(newEmail));
+    /*
+    monaca.cloud.User.login("me@example.com", "password")
+.then(function()
+{
+   return monaca.cloud.User.saveProperty("nickname", "John");
+})
+.then(function()
+{
+   cosole.log("Your nickname was changed");
+})*/
+    
+  });
+});
+
+
+/*
 // FastClick
 document.addEventListener("deviceready", function(){
   FastClick.attach(document.body);
@@ -11,9 +44,10 @@ var URL_POST_LOGIN = 'https://studyabroad.co.jp:studyabroad7205@www-s.studyabroa
 function redirect(destination, params){
   var destination = destination;
   location.href = destination + '.html';
-}  
+}
   // jQuery
   $(function() {
+    
 //    $('.main-header').append(header);
 //    $('.main-sidebar').append(sidebar);
     
@@ -163,3 +197,5 @@ function redirect(destination, params){
       });
   }
 
+
+*/
