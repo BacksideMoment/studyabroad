@@ -15,16 +15,16 @@
   <script src="js/authenticate.js"></script>
   
   <!-- css -->
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="lib/LTE/bootstrap/css/bootstrap.min.css">
+  <!-- AdminLTE -->
+  <link rel="stylesheet" href="lib/LTE/dist/css/AdminLTE.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-  
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-  <link rel="stylesheet" href="components/loader.css">
-  <link rel="stylesheet" href="lib/LTE/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="lib/LTE/dist/css/AdminLTE.min.css">
-  <link rel="stylesheet" href="css/style.css">
-
 </head>
 <body>
   <div class="row">
@@ -38,8 +38,6 @@
           </h1>
         </div>
       </div>
-      <!-- form -->
-      <form action="#" role="form" class="form-horizontal" id="loginForm" method="post" accept-charset="utf-8">
       <div class="box-body">
         <!-- flashMessage --> 
         <div id="flashMessage"></div>
@@ -63,24 +61,23 @@
         <!-- submit -->
         <div class="box-footer">
           <div class="form-group">
-            <button id="loginFormBtn" type="button" class="btn btn-block bg-navy col-md-offset-4">
+            <button onclick="loginCheck();" id="loginFormBtn" type="button" class="btn btn-block bg-navy col-md-offset-4">
               <i class="fa fa-check"></i> 
               <strong>ログインする</strong>
             </button>
           </div>
         </div>
-      </form>
-    </div>
-    <div class="col-md-12">
-      <div class="box-footer">
-        <div class="form-group">
-          <a href="register.html" class="btn btn-block bg-red">
-            <i class="fa fa-plus"></i> 
-            <strong>ユーザー登録はコチラから</strong>
-          </a>
+      </div>
+      <div class="col-md-12">
+        <div class="box-footer">
+          <div class="form-group">
+            <a href="register.html" class="btn btn-block bg-red">
+              <i class="fa fa-plus"></i> 
+              <strong>ユーザー登録はコチラから</strong>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
 <!--    
     <div class="col-md-12">
       <div class="box-footer">
@@ -93,6 +90,7 @@
       </div>
     </div>
       -->
+    </div>
   </div>
 </body>
 </html>

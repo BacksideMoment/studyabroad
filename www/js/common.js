@@ -1,12 +1,159 @@
+
+// ユーザーデータ取得
+getUserDate = function(){
+  var user = [];
+  user['id'] = window.localStorage.getItem('id');
+  user['email'] = window.localStorage.getItem('email');
+  user['password'] = window.localStorage.getItem('password');
+  return user;
+}
+
+// デバイスが準備完了になったら発火
+document.addEventListener('deviceready', function(){
+  var user = new getUserDate();
+//  new isAuthenticated();
+  }, false);
+  
+if ( document.getElementById('main-header') !== null ){
+  // header
+  var headerElm = document.getElementById('main-header');
+  headerElm.innerHTML = header;
+  // sidebar
+  var sidebarElm = document.getElementById('main-sidebar');
+  sidebarElm.innerHTML = sidebar;
+  // logout modal
+  var logoutModalElm = document.getElementById('logoutModal');
+  logoutModalElm.innerHTML = logoutModal;
+}
+
+// error
+setMessage = function(str, color, icon){
+  var message = [];
+  message.push('<div class="alert bg-' + color + '">');
+  message.push('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>');
+  message.push('<p><i class="fa fa-' + icon + '"></i> ' + str + '</p>');
+  message.push('</div>');
+  return message;
+}
+
+postDiary = function(title, body){
+  var flashMessageElement = document.getElementById('flashMessage');
+  var user = new getUserDate();
+  var Diary = monaca.cloud.Collection("diary");
+  var oid = user['id'];
+  var permission = {};
+  permission[oid] = "r";
+  Diary.insert({user_id: oid, title: title, body: body}, permission)
+  .done(function(res){
+    var errMsg = '<h4>投稿が完了しました！！<h4><br><a href="diaryList.html" class="btn btn-block bg-orange">みんなの日記を見る</a><a href="myDiaryList.html" class="btn btn-block bg-maroon">自分が投稿した日記一覧</a>';
+    flashMessageElement.innerHTML = setMessage(errMsg, 'aqua', 'check').join("");
+    return;
+  })
+  .fail(function(err){
+    var errMsg = 'ブログの投稿が出来ませんでした。<br>再度お試しください';
+    flashMessageElement.innerHTML = setMessage(errMsg, 'red', 'ban').join("");
+    setTimeout("redirect('diary')", 3000);
+    return false;
+  });
+}
+
+postCheckDiary = function(){
+  var flashMessageElement = document.getElementById('flashMessage');
+  var title = document.getElementById('title').value;
+  var body = document.getElementById('body').value;
+  // title
+  if ( title === '' ) {
+    var errMsg = 'タイトルは必ず入力してください。';
+    flashMessageElement.innerHTML = setMessage(errMsg, 'red', 'ban').join("");
+    return false;
+  }
+  // body
+  if ( body === '' ) {
+    var errMsg = '内容は必ず入力してください。';
+    flashMessageElement.innerHTML = setMessage(errMsg, 'red', 'ban').join("");
+    return false;
+  }
+  postDiary(title, body);
+}
+
+getMyDiaryList = function(){
+  var user = new getUserDate();
+  var Diary = monaca.cloud.Collection("diary");
+  var Criteria = 'user_id == "' + user['id'] + '"';
+  var Order = "_createdAt DESC";
+  
+  
+  Diary.find(Criteria, Order, {propertyNames: ["title", "body", "_createdAt"]})
+  .done(function(res)
+  {
+    var list = [];
+    list.push('<table class="table table-striped">');
+    list.push('<thead>');
+    list.push('<tr>');
+    list.push('<th>タイトル</th>');
+    list.push('<th>登校時間</th>');
+    list.push('</tr>');
+    list.push('</thead>');
+    list.push('<tbody>');
+    for( var i = 0; i < res.totalItems; i++ ) {
+    console.log(res.items[i].title);
+    console.log(res.items[i]._createdAt);
+      list.push('<tr>');
+      list.push('<td>' + res.items[i].title + '</td>');
+      list.push('<td>' + res.items[i]._createdAt + '</td>');
+      list.push('</tr>');
+    }
+    list.push('</tbody>');
+    list.push('</table>');
+    console.log(list.join(""));
+    var myDiaryList = document.getElementById('myDiaryList');
+    myDiaryList.innerHTML = list.join("");
+    
+    return;
+  })
+  .fail(function(err)
+  {
+     console.log("Err#" + err.code +": " + err.message);
+  });
+
+}
+
+
+/*
+  monaca.cloud.User.autoLogin()
+    .done(function(res){
+      var users = [];
+      users['name'] = res.user._username;
+      users['email'] = res.user._email;
+      users['password'] = res.user._password;
+      redirect('top');  
+    })
+    .fail(function(err){
+      alert(err.message);
+      return false;
+    });*/
 updateEmail = function(newEmail){
   return monaca.cloud.User.saveProperties({"email": newEmail});
 }  
 
 $(function(){
+  //fastclick
   FastClick.attach(document.body);
+  
+  $('#logoutBtn').click(function(){
+    monaca.cloud.User.logout()
+      .done(function(res){
+         redirect('index');
+         return false;
+      })
+      .fail(function(err){
+         console.log("Err#" + err.code +": " + err.message);
+         return false;
+      });
+  });
+  
   $('#updateEmail').click(function(){
     var newEmail = $('#newEmail').val();
-    alert(newEmail);
     if ( newEmail === '' ) {
       $("#flashMessage")
         .empty()
@@ -14,188 +161,7 @@ $(function(){
       $("#newEmail").focus();
       return false;
     }
-    alert(updateEmail(newEmail));
-    /*
-    monaca.cloud.User.login("me@example.com", "password")
-.then(function()
-{
-   return monaca.cloud.User.saveProperty("nickname", "John");
-})
-.then(function()
-{
-   cosole.log("Your nickname was changed");
-})*/
-    
   });
 });
 
 
-/*
-// FastClick
-document.addEventListener("deviceready", function(){
-  FastClick.attach(document.body);
-}, false);
-
-// define
-var URL_POST_REGISTER = 'https://studyabroad.co.jp:studyabroad7205@www-s.studyabroad.co.jp/admin/hybridApp/register/';
-var URL_POST_LOGIN = 'https://studyabroad.co.jp:studyabroad7205@www-s.studyabroad.co.jp/admin/hybridApp/login/';
-
-// 引数のhtmlにリダイレクトさせる
-function redirect(destination, params){
-  var destination = destination;
-  location.href = destination + '.html';
-}
-  // jQuery
-  $(function() {
-    
-//    $('.main-header').append(header);
-//    $('.main-sidebar').append(sidebar);
-    
-    
-    // autoLogin
-    monaca.cloud.User.autoLogin()
-      .done(function(res){
-        var userName = res.user._username;
-        $('#userName').text(userName);
-      })
-      .fail(function(){
-      });
-      
-    // logout
-    $('#logout').click(function(){
-      monaca.cloud.User.logout()
-        .done(function(res){
-          redirect('index');
-        })
-        .fail(function(){
-        });
-    });
-    
-    $('#updatePassword').click(function(){
-      var oldPassword = $('#oldPassword').val();
-      if ( oldPassword === '' ) {
-        $("#flashMessage")
-          .empty()
-          .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-check"></i> 現在のパスワードは必ず入力してください。</p></div>');
-        $("#oldPassword").focus();
-        return false;
-      }
-      var newPassword = $('#newPassword').val();
-      if ( newPassword === '' ) {
-        $("#flashMessage")
-          .empty()
-          .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-check"></i> 新しく設定するパスワードは必ず入力してください。</p></div>');
-        $("#newPassword").focus();
-        return false;
-      }
-      
-      // パスワード更新処理
-      monaca.cloud.User.updatePassword(oldPassword, newPassword)
-        .done(function(res){
-          $('#flashMessage')
-            .empty()
-            .append('<div class="alert bg-aqua"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-smile-o"></i> パスワードの変更が完了しました。</p></div>');
-        })
-        .fail(function(err){
-          $("#flashMessage")
-            .empty()
-            .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-check"></i> 入力されたパスワードに誤りがあります。</p></div>');
-          return false;
-        });
-    });
-    
-    $('#blogPostFormBtn').click(function(){
-      var href = 'https://www.studyabroad.co.jp/counsel/counsel.php';
-      var desk = $('#BlogSeminarDesk').val();
-      alert(desk);
-//      var form = $('#blogPostForm');
-//      var query = form.serialize();
-//      var param = form.serializeArray();
-      
-//      $.each(param, function( i, v) {
-//      alert(i);
-//      alert(v);
-//        var field = i;
-//        var value = v;
-//    	});
-      
-      
-      // ajax
-      $.ajax(
-        {
-          type: 'POST',
-          url: href,
-          data: {
-          'desk': desk
-        },
-        dataType: 'json',
-        success: function(res){
-          alert(res);
-        },
-        error: function(err){
-          alert(err);
-        } 
-      }
-      );
-
-
-      return false;
-    });
-  });
-
-// ログイン済みかの認証を行う
-  function isAuthenticated(){
-    monaca.cloud.User.autoLogin()
-      .done(function(res){
-        redirect('top');  
-      })
-      .fail(function(error){
-        // jQuery
-        $(function() {
-          // ログインボタンが押されたら
-          $("#login").click(function(){
-            $("#errors").empty();
-            var email = $("#email").val();
-            if ( email === '' ) {
-              $("#flashMessage")
-                .empty()
-                .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-close"></i> メールアドレスは必ず入力してください。</p></div>');
-              $("#email").focus();
-              return false;
-            }
-            var password = $("#password").val();
-            if ( password === '') {
-              $("#flashMessage")
-                .empty()
-                .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-close"></i> パスワードは必ず入力してください。</p></div>');
-              $("#password").focus();
-              return false;
-              
-            }
-            // ログイン可能かチェック
-            monaca.cloud.User.login(email, password)
-              .done(function(){ // 成功なら
-                monaca.cloud.User.autoLogin()
-                  .done(function(){ // ログイン成功
-                    redirect('top');
-                  })
-                  .fail(function(error){ // ログイン失敗
-                    $("#flashMessage")
-                      .empty()
-                      .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-close"></i> ログインできません。</p></div>');
-                    return false;
-                  });
-              })
-              .fail(function(err){ // 失敗なら
-                $("#flashMessage")
-                  .empty()
-                  .append('<div class="alert bg-red"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><p><i class="fa fa-close"></i> ログインできません。</p></div>');
-                return false;
-              });
-          })
-        });
-      });
-  }
-
-
-*/

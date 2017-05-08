@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <!-- js -->
   <script src="components/loader.js"></script>
   <script src="lib/LTE/plugins/jQuery/jQuery-2.1.4.min.js"></script>
   <script src="lib/LTE/bootstrap/js/bootstrap.min.js"></script>
@@ -13,6 +14,7 @@
   <script src="js/common.js"></script>
   <script src="js/authenticate.js"></script>
 
+  <!-- css -->
   <link rel="stylesheet" href="components/loader.css">
   <link rel="stylesheet" href="css/style.css">
   <!-- Bootstrap -->
@@ -36,8 +38,6 @@
           </h1>
         </div>
       </div>
-      <!-- form -->
-      <form action="#" role="form" class="form-horizontal" id="registerForm" method="post" accept-charset="utf-8">
       <div class="box-body">
         <!-- flashMessage --> 
         <div id="flashMessage"></div>
@@ -61,13 +61,12 @@
         <!-- submit -->
         <div class="box-footer">
           <div class="form-group">
-            <button id="registerFormBtn" type="button" class="btn btn-block bg-red col-md-offset-4">
+            <button onclick="registCheck();" id="registerFormBtn" type="button" class="btn btn-block bg-red col-md-offset-4">
               <i class="fa fa-check"></i>
               <strong>登録する</strong>
             </button>
           </div>
         </div>
-        </form>
       </div>
     </div>
   </div>
